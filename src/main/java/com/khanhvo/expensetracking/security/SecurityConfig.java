@@ -1,6 +1,7 @@
-package com.khanhvo.expensetracking.config;
+package com.khanhvo.expensetracking.security;
 
-import jakarta.servlet.Filter;
+import com.khanhvo.expensetracking.auth.exceptionhandler.UnauthenticatedHandler;
+import com.khanhvo.expensetracking.auth.exceptionhandler.UnauthorizedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,39 +10,37 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
+//    private final ExceptionHandlerFilter exceptionHandlerFilter;
+
     private final AuthenticationProvider authenticationProvider;
+
+    private final UnauthenticatedHandler unauthenticatedHandler;
+    private final UnauthorizedHandler unauthorizedHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-//        http
-//                .csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
                 .authorizeRequests(auth -> auth
+                        .requestMatchers("/api/test/**").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exc) -> exc
+                        .authenticationEntryPoint(unauthenticatedHandler)
+                        .accessDeniedHandler(unauthorizedHandler));
+//                .addFilterBefore(exceptionHandlerFilter, FilterSecurityInterceptor.class);
         return http.build();
     }
 

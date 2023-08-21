@@ -9,18 +9,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 
-@Data // Lombok annotation to generate getters, setters, toString, hash, equals, etc.
 @Builder // Lombok annotation to generate builder pattern for the object
+@Data // Lombok annotation to generate getters, setters, toString, hash, equals, etc.
 @AllArgsConstructor // Lombok annotation to generate constructor with all fields
-@NoArgsConstructor// Lombok annotation to generate constructor with no fields
+@NoArgsConstructor // Lombok annotation to generate no-arg constructor
 @Document("user")
 public class User implements UserDetails {
     @Id
-    private String id;
+    @Builder.Default
+    private String id = UUID.randomUUID().toString();
     @Field("username")
     private String username;
     @Field("password")
@@ -31,10 +34,15 @@ public class User implements UserDetails {
     private String fullName;
     @Field("role")
     private Role role;
+    @Field("verified")
+    private boolean verified;
+    @Field("createdDate")
+    @Builder.Default
+    private LocalDateTime createdDate= LocalDateTime.now();
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
     @Override
     public String getPassword() {
@@ -62,7 +70,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return verified;
     }
 
 }

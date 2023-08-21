@@ -1,4 +1,4 @@
-package com.khanhvo.expensetracking.auth;
+package com.khanhvo.expensetracking.auth.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder // Lombok annotation to generate builder pattern for the object
 public class AuthenticationRequest {
-    private String username;
+    private String email;
     private String password;
 }

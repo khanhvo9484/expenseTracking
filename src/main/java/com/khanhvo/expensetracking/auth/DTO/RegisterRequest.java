@@ -1,4 +1,4 @@
-package com.khanhvo.expensetracking.auth;
+package com.khanhvo.expensetracking.auth.DTO;
 
 
 import lombok.AllArgsConstructor;

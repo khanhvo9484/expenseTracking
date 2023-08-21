@@ -1,4 +1,4 @@
-package com.khanhvo.expensetracking.config;
+package com.khanhvo.expensetracking.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
