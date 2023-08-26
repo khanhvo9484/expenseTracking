@@ -6,4 +6,8 @@ public class GlobalErrorCodes {
     public static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
     public static final String BAD_CREDENTIALS = "BAD_CREDENTIALS";
     public static final String EMAIL_ALREADY_EXISTS = "EMAIL_ALREADY_EXISTS";
+    public static final String EMAIL_NOT_FOUND = "EMAIL_NOT_FOUND";
+    public static final String EMAIL_NOT_VERIFIED = "EMAIL_NOT_VERIFIED";
+    public static final String EMAIL_ALREADY_VERIFIED = "EMAIL_ALREADY_VERIFIED";
+
 }

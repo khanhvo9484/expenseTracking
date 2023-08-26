@@ -38,6 +38,13 @@ public class JwtService {
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(), userDetails);
     }
+    public String generateToken(String email){
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*10))
+                .signWith(getSigninKey(), SignatureAlgorithm.HS256).compact();
+    }
     public String generateToken(
             Map<String,Object> extraClaims,
             UserDetails userDetails) {
