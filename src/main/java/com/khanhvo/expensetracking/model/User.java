@@ -40,6 +40,12 @@ public class User implements UserDetails {
     @Builder.Default
     private LocalDateTime createdDate= LocalDateTime.now();
 
+    @Field("notifications")
+    private List<Notification> notifications;
+
+    @Field("personalSharedGroups")
+    private List<PersonalSharedGroup> personalSharedGroups;
+
     @Override
     public String getUsername() {
         return email;
