@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -21,10 +22,10 @@ public class Expenses {
     private String id= UUID.randomUUID().toString();
     @Field("groupId")
     private String groupId;
-    @Field("userId")
-    private String userId;
+    @Field("userEmail")
+    private String userEmail;
     @Field("date")
-    private LocalDateTime date;
+    private LocalDate date;
     @Field("createdDate")
     private LocalDateTime createdDate= LocalDateTime.now();
     @Field("spendingItems")
