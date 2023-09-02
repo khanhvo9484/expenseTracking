@@ -3,6 +3,7 @@ package com.khanhvo.expensetracking.service;
 import com.khanhvo.expensetracking.DTO.DTO.ExpenseDTO;
 import com.khanhvo.expensetracking.DTO.requestDTO.CreatExpenseRequest;
 import com.khanhvo.expensetracking.DTO.requestDTO.DeleteExpenseRequest;
+import com.khanhvo.expensetracking.DTO.requestDTO.UpdateExpenseRequest;
 import com.khanhvo.expensetracking.model.Expenses;
 import com.khanhvo.expensetracking.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +41,20 @@ public class ExpenseService {
     public Integer deleteExpense(DeleteExpenseRequest deleteExpenseRequest) {
         try{
             return expenseRepository.deleteExpense(deleteExpenseRequest.getExpenseId(), true, LocalDateTime.now());
-
         } catch (Exception e) {
             throw new RuntimeException("Error when deleting expense");
         }
+    }
+
+    public void updateExpense(UpdateExpenseRequest updateExpenseRequest){
+        try{
+            expenseRepository.updateExpense(updateExpenseRequest.getExpenseId(), updateExpenseRequest.getSpendingItems(),
+                    updateExpenseRequest.getSharedWith(), updateExpenseRequest.getDescription(),
+                    updateExpenseRequest.getCreateFor(), updateExpenseRequest.getModifiedDate(),
+                    updateExpenseRequest.getBeforeModified());
+        } catch (Exception e) {
+            throw new RuntimeException("Error when updating expense");
+        }
+
     }
 }

@@ -51,14 +51,14 @@ public class ExpenseController {
             return ResponseEntity.badRequest().body(customErrorResponse);
         }
     }
-//
-//    @PutMapping("/update")
-//    public ResponseEntity<?> updateExpense(@RequestBody CreatExpenseRequest createExpenseRequest) {
-//        try{
-//            expenseService.updateExpense(createExpenseRequest);
-//            return ResponseEntity.ok("Expense updated successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateExpense(@RequestBody CreatExpenseRequest createExpenseRequest) {
+        try{
+            expenseService.updateExpense(createExpenseRequest);
+            return ResponseEntity.ok("Expense updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
